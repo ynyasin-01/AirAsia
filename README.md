@@ -91,7 +91,7 @@ You can also use **Explore flights** on a popular route or **Book Deal** on a fe
 
 Open **Bookings**, enter the booking reference, and select **Find my booking**. From the reservation dialog, download the itinerary or confirmation, or cancel the booking.
 
-## Supported sample flight routes
+## Supported sample flight routes for help
 
 All routes support travel in both directions.
 
