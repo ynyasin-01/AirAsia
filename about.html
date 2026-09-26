@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>About | AirAsia — Travel Demo</title>
+<meta content="Book flights and hotels across Asia. Explore demo flights and save sample reservations." name="description"/>
+<link href="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text y=%22.9em%22 font-size=%2290%22&gt;✈️&lt;/text&gt;&lt;/svg&gt;" rel="icon"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&amp;family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="styles.css" rel="stylesheet"/>
+<link href="mobile.css" rel="stylesheet"/>
+<link href="pages.css" rel="stylesheet"/><link rel="stylesheet" href="animations.css?v=1">
+</head>
+<body data-page="about">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header" id="top">
+<div class="header-inner">
+<a class="wordmark" href="index.html">air<span>asia</span></a>
+<nav aria-label="Primary" class="main-nav" id="mainNav">
+<a href="index.html">Flight</a>
+<a href="hotel.html">Hotel</a>
+<a href="bookings.html">Bookings</a>
+<a aria-current="page" href="about.html">About</a>
+</nav>
+<div class="header-actions">
+<div class="currency-picker">
+<label class="sr-only" for="currencySelect">Currency</label>
+<span aria-hidden="true" class="currency-flag" id="currencyFlag">৳</span>
+<select id="currencySelect">
+<option selected="" value="BDT">BDT — Taka</option>
+<option value="USD">USD — Dollar</option>
+<option value="EUR">EUR — Euro</option>
+<option value="GBP">GBP — Pound</option>
+<option value="MYR">MYR — Ringgit</option>
+<option value="SGD">SGD — Dollar</option>
+<option value="INR">INR — Rupee</option>
+<option value="AUD">AUD — Dollar</option>
+<option value="THB">THB — Baht</option>
+<option value="AED">AED — Dirham</option>
+</select>
+</div>
+<a class="btn btn-ghost" href="bookings.html">My bookings</a>
+<button class="btn btn-primary auth-button" id="authButton" type="button">Log in</button></div>
+<button aria-expanded="false" aria-label="Open menu" class="nav-toggle" id="navToggle">
+<span></span><span></span><span></span>
+</button>
+</div>
+<div aria-live="polite" class="rate-ticker" role="status">
+<div class="rate-ticker-inner">
+<span class="rate-dot"></span>
+<span id="rateText">Fetching live exchange rate…</span>
+<span class="rate-sep">·</span>
+<span id="rateUpdated">connecting</span>
+</div>
+</div>
+</header>
+<main id="main"><section class="page-intro section"><p class="eyebrow-plain">AIRASIA · TRAVEL DEMO</p><h1>About this project</h1><p>A simpler way to explore your next journey.</p></section><section class="section about-story"><h2>Explore. Plan. Try it out.</h2><p>AirAsia is an independent educational project inspired by modern travel websites. Explore sample flights, compare stays and try the booking experience from search to confirmation.</p><h2>A clear demo experience</h2><p>Flights, hotels, availability and fares are illustrative. No real tickets, payments, confirmation emails or hotel reservations are issued. This project is not affiliated with AirAsia.</p><h2>Your reservations</h2><p>Demo bookings are stored in this browser on this website. View all your saved flights and hotels, download confirmations or cancel reservations on the Bookings page. Clearing browser storage removes saved reservations.</p><div class="booking-actions"><a class="btn btn-primary" href="index.html">Explore flights</a><a class="btn btn-ghost" href="hotel.html">Find a stay</a></div></section><section class="section how-it-works">
+<div class="section-head">
+<h2>How booking works</h2>
+</div>
+<ol class="steps">
+<li>
+<span class="step-num">01</span>
+<h3>Search</h3>
+<p>Pick your route and dates. Fares update instantly in BDT or any currency you choose.</p>
+</li>
+<li>
+<span class="step-num">02</span>
+<h3>Compare</h3>
+<p>See baggage, transit time and total price side by side — no hidden fees added later.</p>
+</li>
+<li>
+<span class="step-num">03</span>
+<h3>Reserve</h3>
+<p>Review the total and save a demo reservation. No payment is collected and no real ticket is issued.</p>
+</li>
+</ol>
+</section><section class="section featured-section">
+<div class="featured-heading benefits-heading">
+<h2>Why Book with AirAsia</h2>
+<p>A simple flight booking demonstration, from search to confirmation.</p>
+</div>
+<div class="benefits-grid">
+<article class="benefit-card">
+<span aria-hidden="true" class="benefit-icon"><svg fill="none" stroke="currentColor" stroke-width="1.7" viewbox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"></circle><path d="m15.5 15.5 5 5"></path></svg></span>
+<div><h3>Easy Search</h3><p>Choose your route, travel dates and passengers. Compare sample departures and book in a few steps.</p></div>
+</article>
+<article class="benefit-card">
+<span aria-hidden="true" class="benefit-icon"><svg fill="none" stroke="currentColor" stroke-width="1.7" viewbox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><path d="M15 8H10a2 2 0 0 0 0 4h4a2 2 0 0 1 0 4H9m3-11v14"></path></svg></span>
+<div><h3>Clear Pricing</h3><p>View fares in your preferred currency, with sample taxes included in deals and optional baggage shown at checkout.</p></div>
+</article>
+<article class="benefit-card">
+<span aria-hidden="true" class="benefit-icon"><svg fill="none" stroke="currentColor" stroke-width="1.7" viewbox="0 0 24 24"><rect height="16" rx="2" width="16" x="4" y="5"></rect><path d="M8 2v6m8-6v6M4 10h16m-12 5 3 3 5-5"></path></svg></span>
+<div><h3>Manage Bookings</h3><p>View saved flights and hotels in separate booking lists. Download your itinerary or cancel a demo booking in this browser.</p></div>
+</article>
+</div>
+</section><section class="section" id="photo-credits"><h2>Photo credits</h2><p>Kuala Lumpur: “Petronas Twin Towers, Kuala Lumpur” by Shiva Kumar Khanal, via <a href="https://commons.wikimedia.org/wiki/File:Petronas_Twin_Towers,_Kuala_Lumpur.jpg">Wikimedia Commons</a>. Licensed under <a href="https://creativecommons.org/licenses/by-sa/3.0/">CC BY-SA 3.0</a>. Original image bundled without modification; displayed with layout cropping.</p></section></main>
+<footer class="site-footer">
+<div class="footer-inner">
+<a class="wordmark" href="index.html">air<span>asia</span></a>
+<nav aria-label="Footer" class="footer-nav">
+<a href="index.html">Flight</a>
+<a href="hotel.html">Hotel</a>
+<a href="bookings.html">Bookings</a>
+<a aria-current="page" href="about.html">About</a>
+</nav>
+<p class="footer-note">Independent educational demo, not affiliated with AirAsia. Fares and schedules are illustrative. Currency conversions are indicative. No real airline reservations are made.</p>
+</div>
+</footer>
+<dialog aria-labelledby="dialogTitle" id="bookingDialog"><button aria-label="Close" class="dialog-close" type="button">×</button><div id="dialogContent"></div></dialog>
+<script src="animations.js?v=1"></script><script src="script.js?v=login-required-1"></script>
+<dialog aria-labelledby="loginTitle" class="login-dialog" id="loginDialog"><button aria-label="Close login" class="login-close" type="button">×</button><h2 id="loginTitle">Welcome back</h2><p>Try the demo account to explore AirAsia.</p><form id="loginForm"><label for="loginUsername">Username</label><input autocomplete="username" id="loginUsername" name="username" required=""/><label for="loginPassword">Password</label><input autocomplete="current-password" id="loginPassword" name="password" required="" type="password"/><p class="demo-credentials">Demo username: <strong>admin</strong><br/>Demo password: <strong>admin</strong></p><p id="loginError" role="alert"></p><button class="btn btn-primary" type="submit">Log in</button></form><p class="auth-disclaimer">Demo only. This login does not protect bookings or personal data.</p></dialog><p aria-live="polite" class="sr-only" id="authStatus" role="status"></p><script src="auth.js?v=required-1"></script></body>
+</html>

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Hotel | AirAsia — Travel Demo</title>
+<meta content="Book flights and hotels across Asia. Explore demo flights and save sample reservations." name="description"/>
+<link href="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text y=%22.9em%22 font-size=%2290%22&gt;✈️&lt;/text&gt;&lt;/svg&gt;" rel="icon"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&amp;family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="styles.css" rel="stylesheet"/>
+<link href="mobile.css" rel="stylesheet"/>
+<link href="pages.css" rel="stylesheet"/><link rel="stylesheet" href="animations.css?v=1">
+</head>
+<body data-page="hotel">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header" id="top">
+<div class="header-inner">
+<a class="wordmark" href="index.html">air<span>asia</span></a>
+<nav aria-label="Primary" class="main-nav" id="mainNav">
+<a href="index.html">Flight</a>
+<a aria-current="page" href="hotel.html">Hotel</a>
+<a href="bookings.html">Bookings</a>
+<a href="about.html">About</a>
+</nav>
+<div class="header-actions">
+<div class="currency-picker">
+<label class="sr-only" for="currencySelect">Currency</label>
+<span aria-hidden="true" class="currency-flag" id="currencyFlag">৳</span>
+<select id="currencySelect">
+<option selected="" value="BDT">BDT — Taka</option>
+<option value="USD">USD — Dollar</option>
+<option value="EUR">EUR — Euro</option>
+<option value="GBP">GBP — Pound</option>
+<option value="MYR">MYR — Ringgit</option>
+<option value="SGD">SGD — Dollar</option>
+<option value="INR">INR — Rupee</option>
+<option value="AUD">AUD — Dollar</option>
+<option value="THB">THB — Baht</option>
+<option value="AED">AED — Dirham</option>
+</select>
+</div>
+<a class="btn btn-ghost" href="bookings.html">My bookings</a>
+<button class="btn btn-primary auth-button" id="authButton" type="button">Log in</button></div>
+<button aria-expanded="false" aria-label="Open menu" class="nav-toggle" id="navToggle">
+<span></span><span></span><span></span>
+</button>
+</div>
+<div aria-live="polite" class="rate-ticker" role="status">
+<div class="rate-ticker-inner">
+<span class="rate-dot"></span>
+<span id="rateText">Fetching live exchange rate…</span>
+<span class="rate-sep">·</span>
+<span id="rateUpdated">connecting</span>
+</div>
+</div>
+</header>
+<main id="main"><section class="page-intro section"><p class="eyebrow-plain">AIRASIA · TRAVEL DEMO</p><h1>Find your next stay</h1><p>Choose your destination, dates and guests, then reserve a sample stay.</p></section><section class="section hotel-section" id="hotel">
+<div class="section-head">
+<h2>Stays near your gate</h2>
+<p>Find your place to unwind. Sample hotels with bookable demo stays.</p>
+</div>
+<form class="hotel-search" id="hotelSearchForm">
+<div class="field"><label for="hotelCity">Destination</label><select id="hotelCity"><option value="">All destinations</option><option>Kuala Lumpur</option><option>Bangkok</option><option>Singapore</option></select></div>
+<div class="field"><label for="checkIn">Check-in</label><input id="checkIn" required="" type="date"/></div>
+<div class="field"><label for="checkOut">Check-out</label><input id="checkOut" required="" type="date"/></div>
+<div class="field"><label for="hotelRooms">Rooms</label><input id="hotelRooms" max="4" min="1" required="" type="number" value="1"/></div>
+<div class="field"><label for="hotelGuests">Guests</label><input id="hotelGuests" max="8" min="1" required="" type="number" value="2"/></div>
+<button class="btn btn-primary">Search hotels</button></form><p id="hotelNote" role="status">Choose your dates. Each room accommodates up to 2 guests.</p>
+<div class="hotel-list" id="hotelList"><!-- injected by script.js --></div>
+</section></main>
+<footer class="site-footer">
+<div class="footer-inner">
+<a class="wordmark" href="index.html">air<span>asia</span></a>
+<nav aria-label="Footer" class="footer-nav">
+<a href="index.html">Flight</a>
+<a aria-current="page" href="hotel.html">Hotel</a>
+<a href="bookings.html">Bookings</a>
+<a href="about.html">About</a>
+</nav>
+<p class="footer-note">Independent educational demo, not affiliated with AirAsia. Fares and schedules are illustrative. Currency conversions are indicative. No real airline reservations are made.</p>
+</div>
+</footer>
+<dialog aria-labelledby="dialogTitle" id="bookingDialog"><button aria-label="Close" class="dialog-close" type="button">×</button><div id="dialogContent"></div></dialog>
+<script src="animations.js?v=1"></script><script src="script.js?v=login-required-1"></script>
+<dialog aria-labelledby="loginTitle" class="login-dialog" id="loginDialog"><button aria-label="Close login" class="login-close" type="button">×</button><h2 id="loginTitle">Welcome back</h2><p>Try the demo account to explore AirAsia.</p><form id="loginForm"><label for="loginUsername">Username</label><input autocomplete="username" id="loginUsername" name="username" required=""/><label for="loginPassword">Password</label><input autocomplete="current-password" id="loginPassword" name="password" required="" type="password"/><p class="demo-credentials">Demo username: <strong>admin</strong><br/>Demo password: <strong>admin</strong></p><p id="loginError" role="alert"></p><button class="btn btn-primary" type="submit">Log in</button></form><p class="auth-disclaimer">Demo only. This login does not protect bookings or personal data.</p></dialog><p aria-live="polite" class="sr-only" id="authStatus" role="status"></p><script src="auth.js?v=required-1"></script></body>
+</html>

@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Flight | AirAsia — Travel Demo</title>
+<meta content="Book flights and hotels across Asia. Explore demo flights and save sample reservations." name="description"/>
+<link href="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text y=%22.9em%22 font-size=%2290%22&gt;✈️&lt;/text&gt;&lt;/svg&gt;" rel="icon"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&amp;family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="styles.css" rel="stylesheet"/>
+<link href="mobile.css" rel="stylesheet"/>
+<link href="pages.css" rel="stylesheet"/><link rel="stylesheet" href="animations.css?v=1">
+</head>
+<body data-page="flight">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header" id="top">
+<div class="header-inner">
+<a class="wordmark" href="index.html">air<span>asia</span></a>
+<nav aria-label="Primary" class="main-nav" id="mainNav">
+<a aria-current="page" href="index.html">Flight</a>
+<a href="hotel.html">Hotel</a>
+<a href="bookings.html">Bookings</a>
+<a href="about.html">About</a>
+</nav>
+<div class="header-actions">
+<div class="currency-picker">
+<label class="sr-only" for="currencySelect">Currency</label>
+<span aria-hidden="true" class="currency-flag" id="currencyFlag">৳</span>
+<select id="currencySelect">
+<option selected="" value="BDT">BDT — Taka</option>
+<option value="USD">USD — Dollar</option>
+<option value="EUR">EUR — Euro</option>
+<option value="GBP">GBP — Pound</option>
+<option value="MYR">MYR — Ringgit</option>
+<option value="SGD">SGD — Dollar</option>
+<option value="INR">INR — Rupee</option>
+<option value="AUD">AUD — Dollar</option>
+<option value="THB">THB — Baht</option>
+<option value="AED">AED — Dirham</option>
+</select>
+</div>
+<a class="btn btn-ghost" href="bookings.html">My bookings</a>
+<button class="btn btn-primary auth-button" id="authButton" type="button">Log in</button></div>
+<button aria-expanded="false" aria-label="Open menu" class="nav-toggle" id="navToggle">
+<span></span><span></span><span></span>
+</button>
+</div>
+<div aria-live="polite" class="rate-ticker" role="status">
+<div class="rate-ticker-inner">
+<span class="rate-dot"></span>
+<span id="rateText">Fetching live exchange rate…</span>
+<span class="rate-sep">·</span>
+<span id="rateUpdated">connecting</span>
+</div>
+</div>
+</header>
+<main id="main"><section class="hero">
+<img alt="Lalbagh Fort in Dhaka" class="hero-background" onerror="this.src='assets/destination.svg';this.onerror=null" src="https://www.pearlhotelbd.com/images/lalbagh-fort.jpg"/><div class="hero-inner">
+<div class="hero-copy">
+<p class="eyebrow-plain">GO FURTHER. FEEL MORE.</p>
+<h1>A little escape.<br/>A whole new<br/><span class="hero-accent">perspective.</span></h1>
+<p class="hero-sub">Find your next flight and a stay to remember. Simple planning, beautiful destinations, and everything in one place.</p>
+</div>
+<div class="hero-postcard"><span class="glass-tag">EXPLORE YOUR DESTINATION</span><img alt="Lalbagh Fort in Dhaka" onerror="this.src='assets/destination.svg';this.onerror=null" src="https://www.pearlhotelbd.com/images/lalbagh-fort.jpg"/><div class="postcard-caption"><span>Dhaka · Bangladesh</span><strong>Lalbagh Fort</strong></div><a class="destination-credit" href="https://www.pearlhotelbd.com/about-us/blog/family-friendly-activities-with-kids" rel="noopener" target="_blank">Photo source</a></div>
+</div>
+<!-- SEARCH WIDGET -->
+<form class="search-card" id="searchForm">
+<div aria-label="Search category" class="search-tabs">
+<a class="search-tab active" href="index.html">Flight</a>
+<a class="search-tab" href="hotel.html">Hotel</a>
+</div>
+<div class="trip-options"><label for="tripType">Trip type</label> <select id="tripType"><option value="oneway">One way</option><option value="roundtrip">Round trip</option></select></div><div class="search-fields" id="flightFields">
+<div class="field">
+<label for="fromCity">From</label>
+<select id="fromCity">
+<option value="DAC">Dhaka (DAC)</option>
+<option value="CGP">Chittagong (CGP)</option>
+<option selected="" value="KUL">Kuala Lumpur (KUL)</option>
+</select>
+</div>
+<button aria-label="Swap origin and destination" class="swap-btn" id="swapCities" type="button">⇄</button>
+<div class="field">
+<label for="toCity">To</label>
+<select id="toCity">
+<option selected="" value="DAC">Dhaka (DAC)</option>
+<option value="CGP">Chittagong (CGP)</option>
+<option value="KUL">Kuala Lumpur (KUL)</option>
+<option value="SIN">Singapore (SIN)</option>
+<option value="BKK">Bangkok (BKK)</option>
+<option value="DXB">Dubai (DXB)</option>
+</select>
+</div>
+<div class="field">
+<label for="departDate">Depart</label>
+<input id="departDate" type="date"/>
+</div>
+<div class="field">
+<label for="returnDate">Return</label>
+<input id="returnDate" type="date"/>
+</div>
+<div class="field field-passengers">
+<label for="passengers">Passengers</label>
+<div class="stepper">
+<button aria-label="Fewer passengers" id="paxMinus" type="button">−</button>
+<span id="paxCount">1</span>
+<button aria-label="More passengers" id="paxPlus" type="button">+</button>
+</div>
+</div>
+<button class="btn btn-primary search-submit" type="submit">Search flights</button>
+</div>
+</form>
+<p aria-live="polite" class="search-note" id="searchNote"></p>
+</section><section class="section" id="flight">
+<div class="section-head">
+<h2>Popular routes from Dhaka</h2>
+<p>One-way fares, converted live to your selected currency.</p>
+</div>
+<button class="btn btn-ghost" id="allRoutes" type="button">View all popular routes</button>
+<div class="route-list" id="routeList"><!-- injected by script.js --></div>
+</section><section aria-labelledby="featuredTitle" class="section featured-section" id="deals">
+<div class="featured-heading">
+<h2 id="featuredTitle">Featured Flight Deals</h2>
+<p>Handpicked routes at simulated promotional fares in your selected currency.</p>
+</div>
+<div class="featured-deals" id="featuredDeals"></div>
+</section></main>
+<footer class="site-footer">
+<div class="footer-inner">
+<a class="wordmark" href="index.html">air<span>asia</span></a>
+<nav aria-label="Footer" class="footer-nav">
+<a aria-current="page" href="index.html">Flight</a>
+<a href="hotel.html">Hotel</a>
+<a href="bookings.html">Bookings</a>
+<a href="about.html">About</a>
+</nav>
+<p class="footer-note">Independent educational demo, not affiliated with AirAsia. Fares and schedules are illustrative. Currency conversions are indicative. No real airline reservations are made.</p>
+</div>
+</footer>
+<dialog aria-labelledby="dialogTitle" id="bookingDialog"><button aria-label="Close" class="dialog-close" type="button">×</button><div id="dialogContent"></div></dialog>
+<script src="animations.js?v=1"></script><script src="script.js?v=login-required-1"></script>
+<dialog aria-labelledby="loginTitle" class="login-dialog" id="loginDialog"><button aria-label="Close login" class="login-close" type="button">×</button><h2 id="loginTitle">Welcome back</h2><p>Try the demo account to explore AirAsia.</p><form id="loginForm"><label for="loginUsername">Username</label><input autocomplete="username" id="loginUsername" name="username" required=""/><label for="loginPassword">Password</label><input autocomplete="current-password" id="loginPassword" name="password" required="" type="password"/><p class="demo-credentials">Demo username: <strong>admin</strong><br/>Demo password: <strong>admin</strong></p><p id="loginError" role="alert"></p><button class="btn btn-primary" type="submit">Log in</button></form><p class="auth-disclaimer">Demo only. This login does not protect bookings or personal data.</p></dialog><p aria-live="polite" class="sr-only" id="authStatus" role="status"></p><script src="auth.js?v=required-1"></script></body>
+</html>
