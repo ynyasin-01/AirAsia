@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="100%" height="100%">
+  <defs>
+    <linearGradient id="hotelGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1e3c72;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#2a5298;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <rect width="800" height="500" fill="url(#hotelGrad)"/>
+  <rect x="340" y="160" width="120" height="150" rx="6" fill="white" fill-opacity="0.9"/>
+  <rect x="360" y="180" width="20" height="20" rx="2" fill="#1e3c72"/>
+  <rect x="420" y="180" width="20" height="20" rx="2" fill="#1e3c72"/>
+  <rect x="360" y="220" width="20" height="20" rx="2" fill="#1e3c72"/>
+  <rect x="420" y="220" width="20" height="20" rx="2" fill="#1e3c72"/>
+  <rect x="385" y="270" width="30" height="40" fill="#d32f2f"/>
+  <text x="400" y="360" fill="white" font-family="sans-serif" font-size="22" font-weight="600" text-anchor="middle">Hotel &amp; Stay</text>
+</svg>
