@@ -272,15 +272,26 @@
         const cancelled=b.status==='Cancelled';
         const title=hotel?esc(b.hotel.name):b.flights.map(f=>esc(f.from)+' → '+esc(f.to)).join(' / ');
         const details=hotel?`${esc(b.hotel.city)} · ${esc(b.stay.checkIn)} → ${esc(b.stay.checkOut)} · ${esc(b.stay.rooms)} room(s) · ${esc(b.stay.guests)} guest(s)`:b.flights.map(f=>`${esc(f.date)} at ${esc(f.time)}`).join(' / ')+` · ${(b.passengers||[]).length} passenger(s)`;
-        return `<article class="saved-booking"><div class="saved-booking-top"><h3>${title}</h3><span class="booking-status ${cancelled?'is-cancelled':''}">${esc(b.status)}</span></div><p>${details}</p><p><strong>${esc(b.display)} ${esc(b.currency)}</strong></p><div class="booking-actions"><button class="btn btn-primary" data-booking="${esc(b.ref)}" data-action="view">View details</button><button class="btn btn-ghost" data-booking="${esc(b.ref)}" data-action="download">Download</button>${cancelled?'':`<button class="btn btn-ghost" data-booking="${esc(b.ref)}" data-action="cancel">Cancel booking</button>`}</div></article>`;
+        return `<article class="saved-booking" style="view-transition-name: booking-${esc(b.ref)}"><div class="saved-booking-top"><h3>${title}</h3><div style="display:flex;align-items:center;gap:12px"><span class="booking-status ${cancelled?'is-cancelled':''}">${esc(b.status)}</span><button class="delete-icon-btn" data-booking="${esc(b.ref)}" data-action="delete" aria-label="Delete booking" title="Delete booking"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/></svg></button></div></div><p>${details}</p><p><strong>${esc(b.display)} ${esc(b.currency)}</strong></p><div class="booking-actions"><button class="btn btn-primary" data-booking="${esc(b.ref)}" data-action="view">View details</button><button class="btn btn-ghost" data-booking="${esc(b.ref)}" data-action="download">Download</button>${cancelled?'':`<button class="btn btn-ghost" data-booking="${esc(b.ref)}" data-action="cancel">Cancel booking</button>`}</div></article>`;
       }).join(''):`<div class="empty-state"><p>No ${hotel?'hotel':'flight'} bookings yet.</p><a class="btn btn-primary" href="${hotel?'hotel.html':'index.html'}">${hotel?'Find a hotel':'Explore flights'}</a></div>`;
       list.querySelectorAll('[data-booking]').forEach(button=>button.onclick=()=>{
         const booking=loadBookings().find(b=>b.ref===button.dataset.booking);if(!booking){renderBookingLists();return;}
+        if(button.dataset.action==='delete'){
+          if(!window.confirm('Delete this booking permanently?'))return;
+          function doDelete(){
+            const records=loadBookings().filter(b=>b.ref!==booking.ref);
+            saveBookings(records);
+            renderBookingLists();
+            showToast('Booking deleted successfully');
+          }
+          if(document.startViewTransition) document.startViewTransition(doDelete); else doDelete();
+          return;
+        }
         if(button.dataset.action==='cancel'){
           if(!window.confirm('Cancel this demo reservation?'))return;
           const records=loadBookings(),found=records.find(b=>b.ref===booking.ref);if(!found){renderBookingLists();return;}found.status='Cancelled';
-          if(!saveBookings(records)){document.getElementById('bookingsListNote').textContent='Unable to save cancellation. Please try again.';return;}
-          renderBookingLists();document.getElementById('bookingsListNote').textContent='Demo booking cancelled.';return;
+          if(!saveBookings(records))return;
+          renderBookingLists();return;
         }
         showBooking(booking);
         if(button.dataset.action==='download'){document.getElementById(booking.type==='hotel'?'downloadHotel':'downloadBooking').click();dialog.close();}
@@ -321,11 +332,12 @@
   }
   function showBooking(b, celebrate=false){
     if(b.type==='hotel'){showHotelBooking(b);return;}
-    content.innerHTML=`<h2 id="dialogTitle">${b.status==='Cancelled'?'Booking cancelled':'Your demo reservation'}</h2><p class="reference">${esc(b.ref)}</p><p>${esc(b.status)} · No real ticket issued</p>${b.flights.map(f=>`<div class="journey"><strong>${esc(f.from)} → ${esc(f.to)}</strong><p>${esc(f.date)} · ${esc(f.time)} · ${esc(f.number)}</p></div>`).join('')}<p>${b.passengers.map(p=>esc(p.first+' '+p.last)).join(', ')}</p><p>Checked baggage: ${b.baggage?'20 kg per passenger per flight':'None'}</p><p><strong>Total: ${esc(b.display)} ${esc(b.currency)}</strong></p><p>Saved in this browser. Keep your reference and download your itinerary.</p><p id="bookingError" role="alert"></p><div class="booking-actions"><a class="btn btn-ghost" href="bookings.html">Manage booking</a><button class="btn btn-primary" id="downloadBooking">Download itinerary</button>${b.status!=='Cancelled'?'<button class="btn btn-ghost" id="cancelBooking">Cancel booking</button>':''}</div>`;
+    content.innerHTML=`<h2 id="dialogTitle">${b.status==='Cancelled'?'Booking cancelled':'Your demo reservation'}</h2><p class="reference">${esc(b.ref)}</p><p>${esc(b.status)} · No real ticket issued</p>${b.flights.map(f=>`<div class="journey"><strong>${esc(f.from)} → ${esc(f.to)}</strong><p>${esc(f.date)} · ${esc(f.time)} · ${esc(f.number)}</p></div>`).join('')}<p>${b.passengers.map(p=>esc(p.first+' '+p.last)).join(', ')}</p><p>Checked baggage: ${b.baggage?'20 kg per passenger per flight':'None'}</p><p><strong>Total: ${esc(b.display)} ${esc(b.currency)}</strong></p><p>Saved in this browser. Keep your reference and download your itinerary.</p><p id="bookingError" role="alert"></p><div class="booking-actions"><a class="btn btn-ghost" href="bookings.html">Manage booking</a><button class="btn btn-primary" id="downloadBooking">Download itinerary</button>${b.status!=='Cancelled'?'<button class="btn btn-ghost" id="cancelBooking">Cancel booking</button>':''}<button class="btn btn-ghost" style="color:#d50920;border-color:#ffd1d6;background:#fff0f2" id="deleteBooking">Delete</button></div>`;
     if(celebrate && window.airasiaSuccess) window.airasiaSuccess(content);
     if(!dialog.open)dialog.showModal();
     document.getElementById('downloadBooking').onclick=()=>{const text=`DEMO ITINERARY - NOT VALID FOR TRAVEL\nReference: ${b.ref}\nStatus: ${b.status}\n${b.flights.map(f=>`${f.from} -> ${f.to} | ${f.date} ${f.time} | ${f.number}`).join('\n')}\nPassengers: ${b.passengers.map(p=>p.first+' '+p.last).join(', ')}\nContact: ${b.email}\nChecked baggage: ${b.baggage?'20 kg per passenger per flight':'None'}\nTotal: ${b.display} ${b.currency}\nNo payment collected. No ticket issued.`;const url=URL.createObjectURL(new Blob([text],{type:'text/plain'}));const a=document.createElement('a');a.href=url;a.download=`demo-itinerary-${b.ref}.txt`;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);};
     const cancel=document.getElementById('cancelBooking');if(cancel)cancel.onclick=()=>{if(!window.confirm('Cancel this demo reservation?'))return;const list=loadBookings();const found=list.find(x=>x.ref===b.ref);if(!found){document.getElementById('bookingError').textContent='Reservation no longer exists in this browser.';return;}found.status='Cancelled';if(!saveBookings(list)){document.getElementById('bookingError').textContent='Cancellation could not be saved. Try again.';return;}renderBookingLists();showBooking(found);};
+    const delBtn=document.getElementById('deleteBooking');if(delBtn)delBtn.onclick=()=>{if(!window.confirm('Delete this booking permanently?'))return;const list=loadBookings();const filtered=list.filter(x=>x.ref!==b.ref);if(!saveBookings(filtered)){document.getElementById('bookingError').textContent='Deletion could not be saved. Try again.';return;}dialog.close();renderBookingLists();showToast('Booking deleted successfully');};
   }
 
   const hotelPhotos=['photo-1566073771259-6a8506099945','photo-1542314831-068cd1dbfeeb','photo-1571896349842-33c89424de2d'];
@@ -348,11 +360,12 @@
     dialog.showModal();document.getElementById('hotelGuestForm').onsubmit=function confirmHotel(e){e.preventDefault();if(!window.airasiaRequireLogin?.(()=>confirmHotel(e)))return;const data=new FormData(e.target),first=data.get('first').trim(),last=data.get('last').trim();if(!first||!last){document.getElementById('hotelSaveError').textContent='Enter the lead guest’s first and last name.';return;}const list=loadBookings();let ref;do{ref=Array.from(crypto.getRandomValues(new Uint8Array(6)),n=>'ABCDEFGHJKLMNPQRSTUVWXYZ23456789'[n%32]).join('');}while(list.some(b=>b.ref===ref));const b={type:'hotel',ref,status:'Confirmed (demo)',hotel:{name:h.name,city:h.city},stay,passengers:[{first,last}],email:data.get('email').trim(),currency,display,totalUSD:total,created:new Date().toISOString()};if(!saveBookings([...list,b])){document.getElementById('hotelSaveError').textContent='Cannot save. Enable browser storage and try again.';return;}showHotelBooking(b,true);};
   }
   function showHotelBooking(b, celebrate=false){
-    content.innerHTML=`<h2 id="dialogTitle">${b.status==='Cancelled'?'Hotel booking cancelled':'Your hotel reservation'}</h2><p class="reference">${esc(b.ref)}</p><p>${esc(b.status)} · Demo only</p><div class="journey"><strong>${esc(b.hotel.name)}</strong><p>${esc(b.hotel.city)} · ${esc(b.stay.checkIn)} → ${esc(b.stay.checkOut)}</p><p>${b.stay.nights} night(s) · ${b.stay.rooms} room(s) · ${b.stay.guests} guest(s)</p></div><p>Lead guest: ${esc(b.passengers[0].first)} ${esc(b.passengers[0].last)}</p><p><strong>Total: ${esc(b.display)} ${esc(b.currency)}</strong></p><p>Saved in this browser. No real hotel reservation or payment.</p><p id="hotelBookingError" role="alert"></p><div class="booking-actions"><a class="btn btn-ghost" href="bookings.html">Manage booking</a><button class="btn btn-primary" id="downloadHotel">Download confirmation</button>${b.status==='Cancelled'?'':'<button class="btn btn-ghost" id="cancelHotel">Cancel hotel booking</button>'}</div>`;
+    content.innerHTML=`<h2 id="dialogTitle">${b.status==='Cancelled'?'Hotel booking cancelled':'Your hotel reservation'}</h2><p class="reference">${esc(b.ref)}</p><p>${esc(b.status)} · Demo only</p><div class="journey"><strong>${esc(b.hotel.name)}</strong><p>${esc(b.hotel.city)} · ${esc(b.stay.checkIn)} → ${esc(b.stay.checkOut)}</p><p>${b.stay.nights} night(s) · ${b.stay.rooms} room(s) · ${b.stay.guests} guest(s)</p></div><p>Lead guest: ${esc(b.passengers[0].first)} ${esc(b.passengers[0].last)}</p><p><strong>Total: ${esc(b.display)} ${esc(b.currency)}</strong></p><p>Saved in this browser. No real hotel reservation or payment.</p><p id="hotelBookingError" role="alert"></p><div class="booking-actions"><a class="btn btn-ghost" href="bookings.html">Manage booking</a><button class="btn btn-primary" id="downloadHotel">Download confirmation</button>${b.status==='Cancelled'?'':'<button class="btn btn-ghost" id="cancelHotel">Cancel hotel booking</button>'}<button class="btn btn-ghost" style="color:#d50920;border-color:#ffd1d6;background:#fff0f2" id="deleteHotel">Delete</button></div>`;
     if(celebrate && window.airasiaSuccess) window.airasiaSuccess(content);
     if(!dialog.open)dialog.showModal();
     document.getElementById('downloadHotel').onclick=()=>{const text=`DEMO HOTEL CONFIRMATION — NOT VALID FOR CHECK-IN\nReference: ${b.ref}\nStatus: ${b.status}\n${b.hotel.name}, ${b.hotel.city}\nCheck-in: ${b.stay.checkIn}\nCheck-out: ${b.stay.checkOut}\n${b.stay.nights} nights | ${b.stay.rooms} rooms | ${b.stay.guests} guests\nLead guest: ${b.passengers[0].first} ${b.passengers[0].last}\nTotal: ${b.display} ${b.currency}\nNo payment collected. No real reservation.`;const url=URL.createObjectURL(new Blob([text],{type:'text/plain'})),a=document.createElement('a');a.href=url;a.download=`demo-hotel-${b.ref}.txt`;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);};
     const cancel=document.getElementById('cancelHotel');if(cancel)cancel.onclick=()=>{if(!window.confirm('Cancel this demo hotel reservation?'))return;const list=loadBookings(),found=list.find(x=>x.ref===b.ref);if(!found){document.getElementById('hotelBookingError').textContent='Booking not found in this browser.';return;}found.status='Cancelled';if(!saveBookings(list)){document.getElementById('hotelBookingError').textContent='Unable to save cancellation. Try again.';return;}renderBookingLists();showHotelBooking(found);};
+    const delHotel=document.getElementById('deleteHotel');if(delHotel)delHotel.onclick=()=>{if(!window.confirm('Delete this demo hotel reservation?'))return;const list=loadBookings(),filtered=list.filter(x=>x.ref!==b.ref);if(!saveBookings(filtered)){document.getElementById('hotelBookingError').textContent='Unable to save deletion. Try again.';return;}dialog.close();renderBookingLists();showToast('Booking deleted successfully');};
   }
 
   // Destination photographs follow the arrival airport, including swaps.
@@ -441,9 +454,37 @@
   renderAllPrices();
   fetchLiveRates();
   renderBookingLists();
+  function showToast(msg){
+    const toast=document.createElement('div');
+    toast.className='premium-toast';
+    toast.textContent=msg;
+    document.body.appendChild(toast);
+    // force layout
+    toast.offsetWidth;
+    toast.classList.add('show');
+    setTimeout(()=>{toast.classList.remove('show');setTimeout(()=>toast.remove(),400);},3000);
+  }
+
   window.addEventListener('storage', e=>{if(e.key==='airasia.bookings.v1'||e.key===null)renderBookingLists();});
 
+  // Logo animation session memory
+  var wordmarks = document.querySelectorAll(".wordmark");
+  var perfEntry = performance.getEntriesByType("navigation")[0];
+  var navType = perfEntry ? perfEntry.type : "";
+  var viaNavBar = sessionStorage.getItem("airasia.skipLogo");
 
+  if (navType === "reload") {
+    sessionStorage.removeItem("airasia.skipLogo");
+  } else if (viaNavBar === "true") {
+    wordmarks.forEach(function(wm) { wm.classList.add("played"); });
+    sessionStorage.removeItem("airasia.skipLogo");
+  } else {
+    sessionStorage.removeItem("airasia.skipLogo");
+  }
 
-  setInterval(fetchLiveRates, 5 * 60 * 1000); // re-sync with real rates every 5 minutes
+  document.querySelectorAll(".main-nav a").forEach(function(link) {
+    link.addEventListener("click", function() {
+      sessionStorage.setItem("airasia.skipLogo", "true");
+    });
+  });  setInterval(fetchLiveRates, 5 * 60 * 1000); // re-sync with real rates every 5 minutes
 })();

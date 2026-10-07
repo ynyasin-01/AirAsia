@@ -13,6 +13,7 @@
 <link href="styles.css" rel="stylesheet"/>
 <link href="mobile.css" rel="stylesheet"/>
 <link href="pages.css" rel="stylesheet"/><link rel="stylesheet" href="animations.css?v=1">
+<script>if(sessionStorage.getItem('airasia.logoAnimated')){document.documentElement.classList.add('logo-played');}else{sessionStorage.setItem('airasia.logoAnimated','true');}</script>
 </head>
 <body data-page="hotel">
 <a class="skip-link" href="#main">Skip to content</a>
@@ -87,3 +88,4 @@
 <script src="animations.js?v=1"></script><script src="script.js?v=login-required-1"></script>
 <dialog aria-labelledby="loginTitle" class="login-dialog" id="loginDialog"><button aria-label="Close login" class="login-close" type="button">×</button><h2 id="loginTitle">Welcome back</h2><p>Try the demo account to explore AirAsia.</p><form id="loginForm"><label for="loginUsername">Username</label><input autocomplete="username" id="loginUsername" name="username" required=""/><label for="loginPassword">Password</label><input autocomplete="current-password" id="loginPassword" name="password" required="" type="password"/><p class="demo-credentials">Demo username: <strong>admin</strong><br/>Demo password: <strong>admin</strong></p><p id="loginError" role="alert"></p><button class="btn btn-primary" type="submit">Log in</button></form><p class="auth-disclaimer">Demo only. This login does not protect bookings or personal data.</p></dialog><p aria-live="polite" class="sr-only" id="authStatus" role="status"></p><script src="auth.js?v=required-1"></script></body>
 </html>
+

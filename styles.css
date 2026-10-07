@@ -71,6 +71,9 @@ ul,ol,dl{ margin:0; padding:0; list-style:none; }
   border: 1px solid transparent;
   border-bottom-color: var(--line);
   border-radius: 0px;
+  overflow: hidden;
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
   transition: max-width 0.6s cubic-bezier(0.19, 1, 0.22, 1),
               top 0.6s cubic-bezier(0.19, 1, 0.22, 1),
               border-radius 0.6s cubic-bezier(0.19, 1, 0.22, 1),
@@ -595,20 +598,63 @@ dialog#bookingDialog h2,dialog#bookingDialog p,dialog#bookingDialog label,dialog
 .route-card .flight-photo,.hotel-card .hotel-photo{transition:filter .3s ease}
 .route-card .btn,.hotel-card .btn{transition:background .2s ease,box-shadow .2s ease,transform .2s ease}
 .route-card:focus-within,.hotel-card:focus-within{border-color:#ce0924;box-shadow:0 12px 30px #21476820}
-.wordmark{position:relative;display:inline-flex;align-items:center;min-width:145px;padding-right:8px;transform-origin:center;-webkit-text-stroke:0.5px rgba(213,9,32,0.2);background:linear-gradient(to right,var(--crimson) 0%,var(--crimson) 100%);background-size:0% 100%;background-repeat:no-repeat;-webkit-background-clip:text;background-clip:text;color:transparent!important;-webkit-text-fill-color:transparent!important;animation:wordmark-draw 3s ease-out forwards;transition:transform .25s ease,text-shadow .25s ease}
-.wordmark::before{content:"";width:0;height:0;margin-right:0;border-radius:50%;background-color:transparent;flex-shrink:0;transition:width .3s ease,height .3s ease,margin-right .3s ease,background-color .3s ease;animation:prevent-hover 3s}
-.wordmark:hover::before, .wordmark:focus-visible::before{width:.25em;height:.25em;margin-right:36px;background-color:#e52335}
-@keyframes wordmark-draw{0%{background-size:0% 100%}100%{background-size:100% 100%}}
-@keyframes prevent-hover{0%,100%{width:0;height:0;margin-right:0;background-color:transparent}}
+.wordmark{position:relative;display:inline-flex;align-items:center;padding-right:8px;transform-origin:center;-webkit-text-stroke:0;background:linear-gradient(to right,var(--crimson) 0%,var(--crimson) 100%);background-size:0% 100%;background-repeat:no-repeat;-webkit-background-clip:text;background-clip:text;color:transparent!important;-webkit-text-fill-color:transparent!important;animation:wordmark-fill 2s cubic-bezier(.22,1,.36,1) 1.5s forwards;transition:transform .3s cubic-bezier(0.2, 0.8, 0.2, 1),text-shadow .3s ease,opacity .3s ease}
+.wordmark.played{animation:none!important;background-size:100% 100%!important}
+.wordmark::after{content:"airasia";position:absolute;left:0;top:0;bottom:0;display:flex;align-items:center;padding-right:8px;white-space:nowrap;color:transparent;-webkit-text-stroke:0.7px var(--crimson);clip-path:inset(0 100% 0 0);animation:wordmark-outline 2.5s cubic-bezier(.22,1,.36,1) forwards;pointer-events:none}
+.wordmark.played::after{display:none!important}
+@keyframes wordmark-fill{0%{background-size:0% 100%}100%{background-size:100% 100%}}
+@keyframes wordmark-outline{0%{clip-path:inset(0 100% 0 0)}100%{clip-path:inset(0 0 0 0)}}
 @media(hover:hover) and (pointer:fine){
  .route-card:hover,.hotel-card:hover{transform:translateY(-6px);border-color:#e3a4af;box-shadow:0 18px 40px #21476825}
  .route-card:hover .flight-photo,.hotel-card:hover .hotel-photo{filter:brightness(1.06) saturate(1.08)}
  .route-card .btn:hover,.hotel-card .btn:hover{transform:translateY(-2px);box-shadow:0 6px 16px #b9092430}
  .stepper button:hover{background:#ffe9ee;border-color:#ce0924}
+ .wordmark:hover{transform:translateY(-2px) scale(1.02);text-shadow:0 12px 28px rgba(213,9,32,0.35);opacity:0.95}
+}
 }
 @media(prefers-reduced-motion:reduce){
  .route-card,.hotel-card,.route-card .flight-photo,.hotel-card .hotel-photo,.route-card .btn,.hotel-card .btn,.stepper button,.wordmark,.wordmark::before{animation:none!important;transition:none!important}
  .route-card:hover,.hotel-card:hover,.route-card .btn:hover,.hotel-card .btn:hover,.stepper button:active{transform:none!important}
+}
+.premium-toast {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px) scale(0.95);
+  background: rgba(23, 44, 64, 0.95);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  color: white;
+  padding: 14px 28px;
+  border-radius: 30px;
+  font-size: 14px;
+  font-weight: 500;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+  opacity: 0;
+  pointer-events: none;
+  z-index: 9999;
+  transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+}
+.premium-toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0) scale(1);
+}
+.delete-icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: none;
+  background: transparent;
+  color: #a4b4c4;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.delete-icon-btn:hover {
+  background: #fff0f2;
+  color: #d50920;
 }
 /* Featured deals and benefits, based on the supplied reference. */
 .featured-section{padding-top:38px;padding-bottom:54px}.featured-heading{margin-bottom:24px}.featured-heading h2{position:relative;display:inline-block;font-size:clamp(25px,2.5vw,32px);font-weight:700;letter-spacing:-.7px;color:#182438;padding-bottom:8px;line-height:1.2}.featured-heading h2:after{content:"";position:absolute;bottom:3px;left:0;width:34px;height:2px;background:#ec1633}.featured-heading p{font-size:13px;color:#536b86;margin-top:2px}.featured-deals{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px}.deal-card{display:flex;flex-direction:column;align-items:flex-start;padding:20px 18px;border:1px solid #dce3ee;border-radius:15px;background:#ffffffdc;box-shadow:0 2px 3px #18324a08;transition:transform .22s ease,box-shadow .22s ease,border-color .22s ease}.deal-tag{font-size:10px;line-height:1.4;font-weight:800;color:#c90823;background:#fff0f2;border-radius:5px;padding:4px 7px;letter-spacing:.1px;margin-bottom:14px}.deal-route{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);gap:10px;align-items:center;width:100%;margin-bottom:8px}.deal-route h3{font:700 14px/1.5 var(--font-body);color:#202d41;letter-spacing:-.2px}.deal-route h3 span{display:block}.deal-arrow{color:#d50920;font-size:17px}.deal-description{font-size:11px;line-height:1.6;color:#526983;margin-bottom:18px}.deal-bottom{border-top:1px solid #dce3ee;width:100%;margin-top:auto;padding-top:13px;display:flex;align-items:flex-end;justify-content:space-between;gap:8px;flex-wrap:wrap}.deal-price-label{display:block;font-size:10px;color:#536b86;margin-bottom:3px}.deal-price{display:block;font-size:18px;line-height:1.3;color:#d50920;font-weight:800}.deal-book{border:0;border-radius:999px;color:#c90823;background:#fff0f2;padding:8px 12px;font:700 11px var(--font-body);white-space:nowrap;cursor:pointer;transition:background .2s,color .2s,transform .2s}.deal-book:focus-visible{outline:2px solid #a30821;outline-offset:3px}.benefits-heading{margin-top:46px}.benefits-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}.benefit-card{display:flex;align-items:flex-start;gap:16px;padding:25px 22px;border:1px solid #dce3ee;border-radius:15px;background:#ffffffd9;box-shadow:0 2px 3px #18324a06}.benefit-icon{display:grid;place-items:center;flex:0 0 40px;height:40px;border-radius:9px;color:#e0122e;background:#fff0f2}.benefit-icon svg{width:23px;height:23px}.benefit-card h3{font-size:16px;font-weight:700;color:#182438;line-height:1.4;margin-bottom:6px}.benefit-card p{font-size:12px;line-height:1.6;color:#536b86}
